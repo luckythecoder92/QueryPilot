@@ -13,11 +13,8 @@ class LLMResult:
     mode: str
 
 class OllamaClient:
-<<<<<<< HEAD
     provider = 'ollama'
 
-=======
->>>>>>> a0da3ece49c97577f961c16a9368d9612df32718
     def __init__(self, checker=connectivity, http=requests): self.checker, self.http = checker, http
     def _installed(self) -> set[str]:
         try:
@@ -40,8 +37,6 @@ class OllamaClient:
             r = self.http.post(f'{settings.ollama_url}/api/generate', json={'model':model,'system':system,'prompt':prompt,'stream':False,'format':'json','options':{'temperature':0}}, timeout=90)
             r.raise_for_status(); return LLMResult(r.json().get('response',''), model, mode)
         except Exception as e: raise LLMUnavailable(str(e)) from e
-
-<<<<<<< HEAD
 
 class GrokClient:
     provider = 'grok'
@@ -125,8 +120,5 @@ def create_llm_client(http=requests):
 class ScriptedLLM:
     provider = 'scripted'
 
-=======
-class ScriptedLLM:
->>>>>>> a0da3ece49c97577f961c16a9368d9612df32718
     def __init__(self, response: str = '{}', model_used='scripted', mode='offline'): self.response, self.model_used, self.mode = response, model_used, mode
     def ask(self, prompt: str, system: str) -> LLMResult: return LLMResult(self.response, self.model_used, self.mode)

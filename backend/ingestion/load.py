@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from pathlib import Path
 from typing import BinaryIO
 
@@ -55,9 +54,3 @@ def load_files(files: list[tuple[str, BinaryIO]]):
     if not frames:
         raise ValueError('No supported files were provided.')
     return sanitize_dataframe(pd.concat(frames, ignore_index=True))
-=======
-import pandas as pd, re
-def sanitize(name): return re.sub(r'[^A-Za-z0-9_.-]', '_', name)
-def load_csv(files):
-    frames=[pd.read_csv(f) for f in files]; return pd.concat(frames, ignore_index=True)
->>>>>>> a0da3ece49c97577f961c16a9368d9612df32718
