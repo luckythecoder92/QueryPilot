@@ -1,0 +1,10 @@
+
+.env
+*.env
+!.env.example
+*.sqlite
+backend/data/uploads/
+backend/data/datasets/
+node_modules/
+.venv/
+__pycache__/

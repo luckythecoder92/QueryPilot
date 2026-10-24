@@ -1,0 +1,36 @@
+.login-page { display: grid; min-height: 100vh; place-items: center; padding: 34px; background: radial-gradient(circle at 75% 15%, rgba(89, 119, 239, .15), transparent 30%), linear-gradient(135deg, #edf3ff 0%, #f7faff 52%, #eaf4ff 100%); }
+.login-panel { display: grid; grid-template-columns: 1.05fr .95fr; width: min(1120px, 100%); min-height: 650px; overflow: hidden; border: 1px solid rgba(255, 255, 255, .9); border-radius: 25px; background: #fff; box-shadow: 0 25px 70px rgba(23, 54, 111, .14); }
+.login-brand { display: flex; flex-direction: column; justify-content: space-between; padding: 46px 54px; background: linear-gradient(150deg, #09152e 0%, #122a5b 61%, #24448f 100%); color: #fff; }
+.login-brand .brand-name { font-size: 24px; }
+.login-copy { margin-top: auto; padding-top: 80px; }
+.login-copy .eyebrow { color: #9db4e4; }
+.login-copy h1 { max-width: 480px; margin: 17px 0 15px; color: #fff; font-size: clamp(32px, 4vw, 47px); line-height: 1.08; letter-spacing: -.055em; }
+.login-copy p { max-width: 455px; margin: 0; color: #c8d6ee; font-size: 15px; line-height: 1.7; }
+.login-points { display: grid; gap: 12px; margin-top: 32px; color: #e4edff; font-size: 13px; }
+.login-points span { display: flex; align-items: center; gap: 10px; }
+.login-points span::before { display: grid; width: 20px; height: 20px; place-items: center; border-radius: 50%; background: rgba(81, 218, 188, .14); color: #63dfc0; content: "✓"; font-size: 11px; font-weight: 800; }
+.login-form { display: flex; flex-direction: column; justify-content: center; gap: 13px; padding: 55px; }
+.login-form h2 { margin: 5px 0 0; color: #14213d; font-size: 28px; letter-spacing: -.04em; }
+.login-form > p { margin: 0 0 18px; color: #7b8aa7; font-size: 13px; }
+.login-form label { display: grid; gap: 7px; color: #4b5d7c; font-size: 12px; font-weight: 700; }
+.login-form input { width: 100%; height: 47px; padding: 0 13px; border: 1px solid #d8e2f0; border-radius: 10px; background: #fbfcff; color: #14213d; font-size: 13px; transition: border .18s ease, box-shadow .18s ease; }
+.login-form input::placeholder { color: #a5b1c6; }
+.login-form input:focus { border-color: #647ce2; box-shadow: 0 0 0 4px rgba(77, 100, 218, .11); outline: 0; }
+.login-form small { margin-top: 8px; color: #97a5bb; font-size: 11px; line-height: 1.5; }
+.login-submit { width: 100%; margin-top: 10px; min-height: 48px; }
+
+@media (max-width: 780px) {
+  .login-page { padding: 17px; }
+  .login-panel { grid-template-columns: 1fr; min-height: 0; }
+  .login-brand { min-height: 390px; padding: 31px; }
+  .login-copy { padding-top: 55px; }
+  .login-copy h1 { font-size: 34px; }
+  .login-form { padding: 34px 31px 38px; }
+}
+
+@media (max-width: 420px) {
+  .login-brand { min-height: 350px; padding: 25px; }
+  .login-copy { padding-top: 38px; }
+  .login-copy h1 { font-size: 29px; }
+  .login-form { padding: 28px 24px 32px; }
+}
