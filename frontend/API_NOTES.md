@@ -4,14 +4,23 @@ Generated from the live `http://localhost:8000/openapi.json` on 2026-10-25.
 
 | Endpoint | Actual contract used |
 |---|---|
+<<<<<<< HEAD
 | `GET /api/health` | `{ok, provider, available, ollama, active_model, mode, online, voice_available}` |
 | `POST /api/datasets` | multipart `files`; accepts CSV and Excel files (`.csv`, `.xlsx`, `.xlsm`, `.xls`); returns dataset metadata |
+=======
+| `GET /api/health` | `{ok, ollama, active_model, mode, online, voice_available}` |
+| `POST /api/datasets` | multipart `files`; CSV files only; returns dataset metadata |
+>>>>>>> a0da3ece49c97577f961c16a9368d9612df32718
 | `POST /api/datasets/demo/{kind}` | `sales` or `school`; returns dataset metadata |
 | `GET /api/datasets/{id}` | Dataset metadata |
 | `GET /api/datasets/{id}/slicers` | Object of string-array values |
 | `POST /api/datasets/{id}/dashboard` | `{kpis: object, figures: string[], table: rows[], columns: string[]}` |
 | `POST /api/datasets/{id}/ask` | `{status, answer, proof, sql, table?, chart?, model_used?, mode?}` |
+<<<<<<< HEAD
 | `GET /api/datasets/{id}/table/{name}?page=1&page_size=50` | `{columns, rows, total, page, page_size, pages}` |
+=======
+| `GET /api/datasets/{id}/table/{name}` | `{columns, rows}` (up to 1000 rows) |
+>>>>>>> a0da3ece49c97577f961c16a9368d9612df32718
 | `POST /api/transcribe` | multipart `audio`; `{text}` |
 | `GET /api/history` | In-memory history rows `{dataset_id, question, status, model_used?}` |
 

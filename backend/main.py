@@ -2,14 +2,23 @@ from pathlib import Path
 import io, sqlite3
 import pandas as pd
 import plotly.express as px
+<<<<<<< HEAD
 from fastapi import FastAPI, UploadFile, File, HTTPException, Query
 from fastapi.staticfiles import StaticFiles
+=======
+from fastapi import FastAPI, UploadFile, File, HTTPException
+>>>>>>> a0da3ece49c97577f961c16a9368d9612df32718
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from core.config import settings
 from core.network import connectivity
+<<<<<<< HEAD
 from llm.client import create_llm_client, LLMUnavailable
 from ingestion.load import SUPPORTED_EXTENSIONS, load_files, sanitize
+=======
+from llm.client import OllamaClient, LLMUnavailable
+from ingestion.load import load_csv, sanitize
+>>>>>>> a0da3ece49c97577f961c16a9368d9612df32718
 from profiling.profile import profile
 from persistence.store import new_id, folder, save_metadata, load_all
 from dashboard.explorer import slicers, filter_data
@@ -39,6 +48,7 @@ def register(df, name):
 
 @app.get('/api/health')
 def health():
+<<<<<<< HEAD
     llm = create_llm_client()
     try: model, mode = llm.choose(); available=True
     except LLMUnavailable: model, mode, available = None, ('online' if connectivity.online() else 'offline'), False
@@ -52,6 +62,21 @@ def upload(files: list[UploadFile] = File(...)):
         item=register(load_files(uploads), sanitize(uploads[0][0]))
         return item
     except Exception as e: raise HTTPException(400, f'Could not parse the uploaded file: {e}')
+=======
+    llm=OllamaClient()
+    try: model, mode = llm.choose(); ollama=True
+    except LLMUnavailable: model, mode, ollama = None, ('online' if connectivity.online() else 'offline'), False
+    return {'ok':True,'ollama':ollama,'active_model':model,'mode':mode,'online':connectivity.online(),'voice_available':WhisperModel is not None}
+
+@app.post('/api/datasets')
+def upload(files: list[UploadFile] = File(...)):
+    csvs=[f for f in files if f.filename and f.filename.lower().endswith('.csv')]
+    if not csvs: raise HTTPException(400,'Upload at least one CSV file.')
+    try:
+        streams=[io.BytesIO(f.file.read()) for f in csvs]; item=register(load_csv(streams), sanitize(csvs[0].filename))
+        return item
+    except Exception as e: raise HTTPException(400, f'Could not parse CSV: {e}')
+>>>>>>> a0da3ece49c97577f961c16a9368d9612df32718
 
 @app.post('/api/datasets/demo/{kind}')
 def demo(kind: str):
@@ -74,6 +99,7 @@ def dashboard(dataset_id: str, request: DashboardRequest):
     return {'kpis':{'rows':len(df),'columns':len(df.columns),'missing':int(df.isna().sum().sum())},'figures':figures,'table':df.head(500).fillna('').to_dict(orient='records'),'columns':df.columns.tolist()}
 @app.post('/api/datasets/{dataset_id}/ask')
 def ask(dataset_id: str, request: AskRequest):
+<<<<<<< HEAD
     item=get_dataset(dataset_id); result=smart_ask(request.question,item,request.history,create_llm_client()); history.append({'dataset_id':dataset_id,'question':request.question,'status':result['status'],'model_used':result.get('model_used')}); return result
 @app.get('/api/datasets/{dataset_id}/table/{name}')
 def table(dataset_id: str, name: str, page: int = Query(1, ge=1), page_size: int = Query(50, ge=1, le=500)):
@@ -84,10 +110,21 @@ def table(dataset_id: str, name: str, page: int = Query(1, ge=1), page_size: int
     start=(current_page - 1) * page_size
     rows=df.iloc[start:start + page_size].fillna('').to_dict(orient='records')
     return {'columns':df.columns.tolist(),'rows':rows,'total':total,'page':current_page,'page_size':page_size,'pages':pages}
+=======
+    item=get_dataset(dataset_id); result=smart_ask(request.question,item,request.history,OllamaClient()); history.append({'dataset_id':dataset_id,'question':request.question,'status':result['status'],'model_used':result.get('model_used')}); return result
+@app.get('/api/datasets/{dataset_id}/table/{name}')
+def table(dataset_id: str, name: str):
+    item=get_dataset(dataset_id)
+    if name != item['table']: raise HTTPException(404,'Table not found')
+    df=dataframe(item); return {'columns':df.columns.tolist(),'rows':df.head(1000).fillna('').to_dict(orient='records')}
+>>>>>>> a0da3ece49c97577f961c16a9368d9612df32718
 @app.post('/api/transcribe')
 def voice(audio: UploadFile = File(...)):
     try: return {'text':transcribe(audio.file.read())}
     except Exception as e: raise HTTPException(503,str(e))
 @app.get('/api/history')
 def get_history(): return history[-100:]
+<<<<<<< HEAD
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
+=======
+>>>>>>> a0da3ece49c97577f961c16a9368d9612df32718

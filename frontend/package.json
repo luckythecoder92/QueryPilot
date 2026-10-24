@@ -10,8 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@types/plotly.js": "^3.0.15",
     "plotly.js-dist-min": "^4.1.2",
+=======
+>>>>>>> a0da3ece49c97577f961c16a9368d9612df32718
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
