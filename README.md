@@ -60,6 +60,8 @@ Set these server-side environment variables in the deployment service:
 
 The Grok key must stay on the backend. Do not add it to `frontend/.env` or expose it to browser code.
 
+For the current Render frontend, set `QP_CORS_ORIGINS=https://querypilot-1-25qp.onrender.com` in the backend service. Do not include a trailing slash. Redeploy the backend after changing this variable.
+
 Run backend tests from `backend/`:
 
 `python -m unittest discover -s tests -t .`
