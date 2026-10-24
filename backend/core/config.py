@@ -11,11 +11,13 @@ DEFAULT_CORS_ORIGINS = (
     'http://127.0.0.1:5174',
     'https://querypilot-1-25qp.onrender.com',
 )
+DEPLOYED_FRONTEND_ORIGIN = 'https://querypilot-1-25qp.onrender.com'
 
 
 def configured_origins() -> tuple[str, ...]:
     raw = os.getenv('QP_CORS_ORIGINS') or os.getenv('QP_FRONTEND_URL')
     origins = raw.split(',') if raw else DEFAULT_CORS_ORIGINS
+    origins = [*origins, os.getenv('QP_RENDER_FRONTEND_URL', DEPLOYED_FRONTEND_ORIGIN)]
     return tuple(dict.fromkeys(origin.strip().rstrip('/') for origin in origins if origin.strip()))
 
 

@@ -17,7 +17,14 @@ from verification.smart import smart_ask
 from speech.transcribe import transcribe, WhisperModel
 
 app = FastAPI(title='QueryPilot AI')
-app.add_middleware(CORSMiddleware, allow_origins=list(settings.cors_origins), allow_credentials=True, allow_methods=['*'], allow_headers=['*'])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=list(settings.cors_origins),
+    allow_origin_regex=r'^https://querypilot-[a-z0-9-]+\.onrender\.com$',
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
 datasets = {x['id']:x for x in load_all()}
 history=[]
 
