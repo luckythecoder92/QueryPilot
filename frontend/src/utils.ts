@@ -1,0 +1,3 @@
+export const formatNumber=(value:unknown)=>typeof value==='number'?new Intl.NumberFormat().format(value):String(value??'—')
+export function csv(rows:Record<string,unknown>[], columns?:string[]){const keys=columns?.length?columns:Object.keys(rows[0]??{});const quote=(v:unknown)=>`"${String(v??'').replaceAll('"','""')}"`;return [keys.map(quote).join(','),...rows.map(r=>keys.map(k=>quote(r[k])).join(','))].join('\n')}
+export function downloadCsv(rows:Record<string,unknown>[],name:string,columns?:string[]){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv(rows,columns)],{type:'text/csv'}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
